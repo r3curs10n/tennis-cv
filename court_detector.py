@@ -28,7 +28,7 @@ model = Sequential()
 model.add(Convolution2D(32, (5, 5), data_format='channels_first', activation='relu', input_shape=(1,height, width)))
 model.add(MaxPooling2D(pool_size=(4,4)))
 
-model.add(Convolution2D(64, (3, 3), data_format='channels_first', activation='relu')
+model.add(Convolution2D(64, (3, 3), data_format='channels_first', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 model.add(Flatten())
@@ -43,3 +43,4 @@ model.fit(X_train, Y_train, batch_size=X_train.shape[0], epochs=20, verbose=1)
 score = model.evaluate(X_test, Y_test, verbose=0)
 print score
 model.save('models/court_detector.h5')
+
