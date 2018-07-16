@@ -3,6 +3,7 @@ from keras.models import load_model
 import numpy as np
 import cv2
 import data_loader
+import experimental
 
 GREEN = (0,255,0)
 RED = (0,0,255)
@@ -12,7 +13,7 @@ MODEL_NAME = 'models/court_detector.h5'
 # visible and RED when it is not. Uses MODEL_NAME for classification.
 def main():
 	model = load_model(MODEL_NAME)
-	cap = cv2.VideoCapture('test_video.mp4')
+	cap = cv2.VideoCapture('trimmed.mp4')
 
 	while (cap.isOpened()):
 		# Skip alternate frame because classification is slow.
@@ -26,6 +27,9 @@ def main():
 		color = GREEN
 		if ans[0][0] < 0.5:
 			color = RED
+		else:
+			pts = experimental.get_key_points_3(frame)
+			draw_points(frame, pts)
 
 		cv2.circle(frame, (50,50), 10, color, -1)
 
@@ -34,5 +38,9 @@ def main():
 		key = cv2.waitKey(1)
 		if key & 0xFF == ord('q'):
 			break
+
+def draw_points(img, pts):
+	for x, y in pts:
+		cv2.circle(img, (x, y), 5, GREEN, -1)
 
 main()
