@@ -8,7 +8,19 @@ from keras.layers import Convolution2D, MaxPooling2D
 
 from keras.utils import np_utils
 
+
+import os
+
+
 import data_loader
+
+
+def save_model(model):
+    dir = os.getcwd() + os.sep + 'models'
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    model.save('models/court_detector.h5')
+
 
 ((X_train, Y_train), (X_test, Y_test)) = data_loader.get_train_and_test_data()
 
@@ -42,5 +54,4 @@ model.fit(X_train, Y_train, batch_size=X_train.shape[0], epochs=20, verbose=1)
 
 score = model.evaluate(X_test, Y_test, verbose=0)
 print score
-model.save('models/court_detector.h5')
-
+save_model(model)
