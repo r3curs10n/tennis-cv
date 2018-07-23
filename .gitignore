@@ -1,6 +1,0 @@
-ref/
-data/
-.gitignore
-*.pyc
-.DS_Store
-test_data/
